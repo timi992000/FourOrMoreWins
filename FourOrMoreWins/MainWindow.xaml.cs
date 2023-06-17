@@ -6,31 +6,35 @@ using System.ComponentModel;
 
 namespace FourOrMoreWins
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : MetroWindow
-	{
-		private MainWindowViewModel _ViewModel;
-		private StartupDialog _Startup;
-		public MainWindow()
-		{
-			InitializeComponent();
-			_ViewModel = new MainWindowViewModel();
-			DataContext = _ViewModel;
-			__AfterInit();
-		}
+  /// <summary>
+  /// Interaction logic for MainWindow.xaml
+  /// </summary>
+  public partial class MainWindow : MetroWindow
+  {
+    private MainWindowViewModel _ViewModel;
+    private StartupDialog _Startup;
+    public MainWindow()
+    {
+      InitializeComponent();
+      Closing += __Closing;
+      _ViewModel = new MainWindowViewModel();
+      DataContext = _ViewModel;
+      _Startup = new StartupDialog(_ViewModel);
+      _Startup.StartRequested += __StartRequested;
+      _Startup.ShowWindow();
+      Hide();
+    }
 
-		private void __AfterInit()
-		{
-			Closing += __Closing;
-		}
+    private void __StartRequested(object? sender, EventArgs e)
+    {
+      Show();
+    }
 
-		private void __Closing(object? sender, CancelEventArgs e)
-		{
-			e.Cancel = true;
-			Hide();
-			_Startup.ShowWindow();
-		}
-	}
+    private void __Closing(object? sender, CancelEventArgs e)
+    {
+      e.Cancel = true;
+      Hide();
+      _Startup.ShowWindow();
+    }
+  }
 }

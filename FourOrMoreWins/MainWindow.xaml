@@ -9,7 +9,12 @@
                   Title="MainWindow"
                   Height="450"
                   Width="800">
-    <Grid>
-
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <ContentControl Content="{Binding GameField}"
+                    Grid.Row="1" />
+  </Grid>
 </mah:MetroWindow>
