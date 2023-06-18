@@ -1,8 +1,9 @@
 ﻿using FourOrMoreWins.Core.BaseClasses;
+using FourOrMoreWins.Core.Entities;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace FourOrMoreWins.Client.ViewModels
 {
@@ -53,39 +54,29 @@ namespace FourOrMoreWins.Client.ViewModels
 
     private void __DoDraw()
     {
-      int verticalGAP = 10;
-      int horizontalGAP = 10;
-      int CircleDiameter = 50;
-      var CircleBrush = Brushes.White;
 
-      var canvas = new Canvas
+      int size = 50;
+      int margin = 10;
+
+
+      var grid = new Grid
       {
         Background = Brushes.Blue
       };
 
-      var neededHeight = RowCount * (CircleDiameter + verticalGAP) - verticalGAP;
-      var neededWidth = ColumnCount * (CircleDiameter + horizontalGAP) - horizontalGAP;
-      canvas.Height = neededHeight;
-      canvas.Width = neededWidth;
-
       for (int rowCounter = 0; rowCounter < RowCount; rowCounter++)
       {
+        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
         for (int columnCounter = 0; columnCounter < ColumnCount; columnCounter++)
         {
-          var ellipse = new Ellipse
-          {
-            Width = CircleDiameter,
-            Height = CircleDiameter,
-            Fill = CircleBrush
-          };
-          Canvas.SetLeft(ellipse, columnCounter * CircleDiameter + (verticalGAP * columnCounter));
-          Canvas.SetTop(ellipse, rowCounter * CircleDiameter + (horizontalGAP * rowCounter));
-          canvas.Children.Add(ellipse);
+          grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+          var cell = new GameCell(rowCounter, columnCounter, size, margin);
+          Grid.SetColumn(cell.Element, columnCounter);
+          Grid.SetRow(cell.Element, rowCounter);
+          grid.Children.Add(cell.Element);
         }
       }
-
-
-      GameField = canvas;
+      GameField = grid;
     }
   }
 }
