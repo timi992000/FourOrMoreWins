@@ -1,25 +1,24 @@
 ﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Converters;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace FourOrMoreWins.Core.Entities
 {
   public class GameCell
   {
-    private int row;
-    private int column;
-    private int size;
-    private int margin;
+    public bool Locked { get; private set; }
+    public int Row { get; private set; }
+    public int Column { get; private set; }
+    private int _Size;
+    private int _Margin;
     public event EventHandler Clicked;
     public GameCell(int Row, int Column, int Size, int Margin)
     {
-      row = Row;
-      column = Column;
-      size = Size;
-      margin = Margin;
+      this.Row = Row;
+      this.Column = Column;
+      _Size = Size;
+      _Margin = Margin;
       __CreateButton();
     }
     public GameCellButton Element
@@ -30,6 +29,7 @@ namespace FourOrMoreWins.Core.Entities
       var btn = Element.GetButton();
       var parent = btn.TryFindParent<UserControl>();
       parent.Resources["GameCellBackground"] = player.PlayerBrush;
+      Locked = true;
     }
 
     private void __CreateButton()
@@ -37,8 +37,8 @@ namespace FourOrMoreWins.Core.Entities
       Element = new GameCellButton();
       var btn = Element.GetButton();
       btn.Margin = new Thickness(10);
-      btn.Width = size;
-      btn.Height = size;
+      btn.Width = _Size;
+      btn.Height = _Size;
       btn.Click += (sender, e) => { Clicked?.Invoke(this, e); };
     }
 

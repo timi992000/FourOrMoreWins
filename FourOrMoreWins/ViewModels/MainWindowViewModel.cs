@@ -118,11 +118,26 @@ namespace FourOrMoreWins.Client.ViewModels
 
     private void __CellClicked(object? sender, EventArgs e)
     {
-      if (sender is GameCell cell)
+      if (sender is GameCell cell && !cell.Locked)
       {
+        cell = __GetBottomCellToSet(cell);
+        if (cell == null)
+          return;
         cell.SetPlayer(CurrentPlayer);
         __NextPlayer();
       }
+    }
+
+    private GameCell __GetBottomCellToSet(GameCell cell)
+    {
+      //Get all gamecells from clicked column which are not locked
+      var gameCellsFromColumn = _GameCells.Where(c => c.Column == cell.Column && !c.Locked).ToList();
+
+      //All gamecells have player assignment - do nothing on click
+      if (!gameCellsFromColumn.Any())
+        return null;
+
+      return gameCellsFromColumn.OrderByDescending(c => c.Row).FirstOrDefault();
     }
   }
 }
