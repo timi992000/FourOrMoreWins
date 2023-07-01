@@ -16,6 +16,7 @@ namespace FourOrMoreWins.Client.Dialogs
     {
       _ViewModel = viewModel;
       __Init();
+      SizeToContent = System.Windows.SizeToContent.WidthAndHeight;
     }
 
     private void __Init()

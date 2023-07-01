@@ -1,6 +1,8 @@
 ﻿using FourOrMoreWins.Core.BaseClasses;
 using FourOrMoreWins.Core.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,11 +11,24 @@ namespace FourOrMoreWins.Client.ViewModels
 {
   public class MainWindowViewModel : ViewModelBase
   {
+    private Player[] _Players = new Player[]
+    {
+    new Player{ PlayerBrush = Brushes.Yellow },
+    new Player{ PlayerBrush = Brushes.Red },
+    };
+    private Queue<Player> _TurnQueue;
+    private List<GameCell> _GameCells;
     public MainWindowViewModel()
     {
       NeedsToWinCount = 4;
       RowCount = 6;
       ColumnCount = 8;
+    }
+
+    public Player CurrentPlayer
+    {
+      get => Get<Player>();
+      set => Set(value);
     }
 
     public int NeedsToWinCount
@@ -45,6 +60,7 @@ namespace FourOrMoreWins.Client.ViewModels
       try
       {
         __DoDraw();
+        __Enqueue();
       }
       catch (Exception ex)
       {
@@ -52,12 +68,25 @@ namespace FourOrMoreWins.Client.ViewModels
       }
     }
 
+    private void __Enqueue()
+    {
+      _TurnQueue = new Queue<Player>();
+      _Players.ToList().ForEach(x => _TurnQueue.Enqueue(x));
+      __NextPlayer();
+    }
+
+    private void __NextPlayer()
+    {
+      CurrentPlayer = _TurnQueue.Dequeue();
+      _TurnQueue.Enqueue(CurrentPlayer);
+      OnPropertyChanged(nameof(Player.PlayerBrush));
+    }
+
     private void __DoDraw()
     {
-
+      _GameCells = new List<GameCell>();
       int size = 50;
       int margin = 10;
-
 
       var grid = new Grid
       {
@@ -70,13 +99,30 @@ namespace FourOrMoreWins.Client.ViewModels
         for (int columnCounter = 0; columnCounter < ColumnCount; columnCounter++)
         {
           grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-          var cell = new GameCell(rowCounter, columnCounter, size, margin);
+          GameCell cell = __GetNewGameCell(size, margin, rowCounter, columnCounter);
           Grid.SetColumn(cell.Element, columnCounter);
           Grid.SetRow(cell.Element, rowCounter);
           grid.Children.Add(cell.Element);
         }
       }
       GameField = grid;
+    }
+
+    private GameCell __GetNewGameCell(int size, int margin, int rowCounter, int columnCounter)
+    {
+      var cell = new GameCell(rowCounter, columnCounter, size, margin);
+      cell.Clicked += __CellClicked;
+      _GameCells.Add(cell);
+      return cell;
+    }
+
+    private void __CellClicked(object? sender, EventArgs e)
+    {
+      if (sender is GameCell cell)
+      {
+        cell.SetPlayer(CurrentPlayer);
+        __NextPlayer();
+      }
     }
   }
 }
