@@ -14,7 +14,7 @@ Customizable Settings: Adjust the game according to your preferences, such as th
 (COMING SOON) Game Statistics: Track your progress and view your statistics, such as the number of games won and lost.
 
 # UI
-![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/7b142e27-fe2d-4e4c-9d21-8d254996e046)
+![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/9d45932d-dcae-4dc0-a8da-8db8d7069a25)
 
 ![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/44f02a4a-4438-44ab-9049-ec7404b02eca)
 
