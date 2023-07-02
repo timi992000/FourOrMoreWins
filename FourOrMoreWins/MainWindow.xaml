@@ -6,7 +6,7 @@
                   xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                   xmlns:local="clr-namespace:FourOrMoreWins"
                   mc:Ignorable="d"
-                  Title="4 ORE MORE WINS"
+                  Title="4 OR MORE WINS"
                   Height="450"
                   Width="800"
                   Background="Blue">
