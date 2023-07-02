@@ -131,15 +131,17 @@ namespace FourOrMoreWins.Core.BaseClasses
 			=> ShowErrorMessage(ex, null, methodName);
 		public void ShowErrorMessage(Exception ex, MetroWindow metroWindow, [CallerMemberName] string methodName = "")
 		{
-			ShowMessage(ex.ToStringValue(), $"Operation {methodName} failed! {DateTime.Now}", metroWindow);
+			ShowMessage(ex.ToStringValue(), $"Operation {methodName} failed! {DateTime.Now}", metroWindow, null);
 		}
 
 		public void ShowMessage(string message, MetroWindow metroWindow)
-			=> ShowMessage(message, "", metroWindow);
-		public void ShowMessage(string message, string title, MetroWindow metroWindow)
+			=> ShowMessage(message, "", metroWindow, null);
+		public void ShowMessage(string message, MetroWindow metroWindow, MetroDialogSettings settings)
+			=> ShowMessage(message, "", metroWindow, settings);
+		public void ShowMessage(string message, string title, MetroWindow metroWindow, MetroDialogSettings settings)
 		{
 			if (metroWindow != null)
-				metroWindow.ShowMessageAsync(title, message);
+				metroWindow.ShowMessageAsync(title, message, settings: settings);
 			else
 				MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
 		}

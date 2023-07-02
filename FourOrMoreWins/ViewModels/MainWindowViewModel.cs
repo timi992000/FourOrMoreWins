@@ -2,6 +2,7 @@
 using FourOrMoreWins.Core.Entities;
 using FourOrMoreWins.Core.Extender;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -181,7 +182,9 @@ namespace FourOrMoreWins.Client.ViewModels
 		private void __DoWinAction()
 		{
 			var playerText = CurrentPlayer.PlayerBrush.ToStringValue().Equals("#FFFFFF00") ? "Yellow" : "Red";
-			ShowMessage($"Player {playerText} won", _MetroWindow);
+			var dlgSettings = new MetroDialogSettings();
+			dlgSettings.DialogMessageFontSize = 30;
+			ShowMessage($"Player {playerText} won", _MetroWindow, dlgSettings);
 		}
 
 		private bool __CheckRowWin(GameCell cell)
