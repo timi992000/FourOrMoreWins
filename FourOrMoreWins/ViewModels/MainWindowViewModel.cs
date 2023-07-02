@@ -63,8 +63,17 @@ namespace FourOrMoreWins.Client.ViewModels
 		public bool IsRunningGame
 		{
 			get => Get<bool>();
-			set => Set(value);
+			set
+			{
+				Set(value);
+				OnPropertyChanged(nameof(LeftText));
+				OnPropertyChanged(nameof(RightText));
+			}
 		}
+
+		public string LeftText => IsRunningGame ? "ITS" : "Player";
+
+		public string RightText => IsRunningGame ? "TURN" : "Won";
 
 		public void DrawGameField()
 		{
@@ -117,6 +126,7 @@ namespace FourOrMoreWins.Client.ViewModels
 				}
 			}
 			GameField = grid;
+			IsRunningGame = false;
 			IsRunningGame = true;
 		}
 

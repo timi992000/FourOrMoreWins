@@ -27,7 +27,7 @@ namespace FourOrMoreWins.Client.Dialogs
       _View = new StartupDialogView();
       _View.DataContext = _ViewModel;
       _View.StartGameRequested += __StartGameRequested;
-      Title = "4 OR MORE Startwindow";
+      Title = "4 OR MORE Settings";
       Content = _View;
     }
 
