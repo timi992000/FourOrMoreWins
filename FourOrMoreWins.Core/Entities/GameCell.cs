@@ -2,12 +2,14 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace FourOrMoreWins.Core.Entities
 {
   public class GameCell
   {
     public bool Locked { get; private set; }
+    public bool WinnerCell { get; set; }
     public int Row { get; private set; }
     public int Column { get; private set; }
     public Player Player { get; private set; }
@@ -33,8 +35,15 @@ namespace FourOrMoreWins.Core.Entities
       parent.Resources["GameCellBackground"] = player.PlayerBrush;
       Locked = true;
     }
+		public void SetPlayer(Brush brush)
+		{
+			var btn = Element.GetButton();
+			var parent = btn.TryFindParent<UserControl>();
+			parent.Resources["GameCellBackground"] = brush;
+		}
 
-    private void __CreateButton()
+
+		private void __CreateButton()
     {
       Element = new GameCellButton();
       var btn = Element.GetButton();

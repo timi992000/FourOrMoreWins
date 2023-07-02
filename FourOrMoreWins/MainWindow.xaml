@@ -31,6 +31,8 @@
     </StackPanel>
     <ContentControl Content="{Binding GameField}"
                     Grid.Row="1"
-                    IsEnabled="{Binding IsRunningGame}" />
+                    IsEnabled="{Binding IsRunningGame}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
   </Grid>
 </mah:MetroWindow>
