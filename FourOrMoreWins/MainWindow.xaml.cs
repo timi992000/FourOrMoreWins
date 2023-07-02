@@ -18,7 +18,7 @@ namespace FourOrMoreWins
       InitializeComponent();
       SizeToContent = System.Windows.SizeToContent.WidthAndHeight;
       Closing += __Closing;
-      _ViewModel = new MainWindowViewModel();
+      _ViewModel = new MainWindowViewModel(this);
       DataContext = _ViewModel;
       _Startup = new StartupDialog(_ViewModel);
       _Startup.StartRequested += __StartRequested;

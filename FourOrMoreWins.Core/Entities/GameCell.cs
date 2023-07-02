@@ -10,6 +10,7 @@ namespace FourOrMoreWins.Core.Entities
     public bool Locked { get; private set; }
     public int Row { get; private set; }
     public int Column { get; private set; }
+    public Player Player { get; private set; }
     private int _Size;
     private int _Margin;
     public event EventHandler Clicked;
@@ -28,6 +29,7 @@ namespace FourOrMoreWins.Core.Entities
     {
       var btn = Element.GetButton();
       var parent = btn.TryFindParent<UserControl>();
+      Player = player;
       parent.Resources["GameCellBackground"] = player.PlayerBrush;
       Locked = true;
     }
