@@ -242,73 +242,90 @@ namespace FourOrMoreWins.Client.ViewModels
 
 		private bool __CheckDiagonalWin(GameCell cell)
 		{
-			__CheckDiagonalSlash(cell);
+			var slashWin = __CheckDiagonalSlash(cell);
+			if (slashWin)
+				return true;
+			var backSlashWin = __CheckDiagonalBackSlash(cell);
+			if (backSlashWin)
+				return true;
 			return false;
 		}
 
-		private void __CheckDiagonalSlash(GameCell cell)
+		private bool __CheckDiagonalSlash(GameCell cell)
 		{
-			var startRow = RowCount - cell.Row;
-			var startColumn = ColumnCount - cell.Column;
-			//__GetCell(startRow, startColumn)?.SetPlayer(Brushes.Orange);
-		}
-		public bool __CheckForDiagonalÜberprüfenAufDiagonalen()
-		{
+			GameCell currentCellToCheck = cell;
+			//Go down and left to first cell in the diagonal
+			while (currentCellToCheck != null)
+			{
+				var foundCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row + 1 && c.Column == currentCellToCheck.Column - 1);
+				if (foundCell != null)
+					currentCellToCheck = foundCell;
+				else
+					break;
+			}
+
+			//Go up and right and check for continuous
+			while (currentCellToCheck != null)
+			{
+				bool isContinuous = true;
+				for (int i = 0; i < NeedsToWinCount; i++)
+				{
+					var matchingCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row - i && c.Column == currentCellToCheck.Column + i && c.Player == cell.Player && c.Locked);
+					if (matchingCell == null)
+						isContinuous = false;
+					else
+						matchingCell.WinnerCell = true;
+				}
+				if (isContinuous)
+					return true;
+				_GameCells.ForEach(c => c.WinnerCell = false);
+				var foundCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row - 1 && c.Column == currentCellToCheck.Column + 1);
+				if (foundCell != null)
+					currentCellToCheck = foundCell;
+				else
+					break;
+			}
+
 			return false;
-			//Farbe farbe = raster[x, y];
-
-			//// Überprüfen der rechten oberen Diagonale
-			//int count = 0;
-			//for (int i = 0; i < 4; i++)
-			//{
-			//	int newX = x + i;
-			//	int newY = y + i;
-			//	if (newX >= ColumnCount || newY >= RowCount || raster[newX, newY] != farbe)
-			//	{
-			//		break;
-			//	}
-			//	count++;
-			//}
-			//if (count == 4)
-			//{
-			//	return true;
-			//}
-
-			//// Überprüfen der linken oberen Diagonale
-			//count = 0;
-			//for (int i = 0; i < 4; i++)
-			//{
-			//	int newX = x - i;
-			//	int newY = y + i;
-			//	if (newX < 0 || newY >= RowCount || raster[newX, newY] != farbe)
-			//	{
-			//		break;
-			//	}
-			//	count++;
-			//}
-			//if (count == 4)
-			//{
-			//	return true;
-			//}
-
-			//// Überprüfen der linken unteren Diagonale
-			//count = 0;
-			//for (int i = 0; i < 4; i++)
-			//{
-			//	int newX = x - i;
-			//	int newY = y - i;
-			//	if (newX < 0 || newY < 0 || raster[newX, newY] != farbe)
-			//	{
-			//		break;
-			//}
-			//if (count == 4)
-			//{
-			//	return true;
-			//}
-
-			//return false;
 		}
 
+		private bool __CheckDiagonalBackSlash(GameCell cell)
+		{
+			GameCell currentCellToCheck = cell;
+			//Go up and left to first cell in the diagonal
+			while (currentCellToCheck != null)
+			{
+				var foundCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row - 1 && c.Column == currentCellToCheck.Column - 1);
+				if (foundCell != null)
+					currentCellToCheck = foundCell;
+				else
+					break;
+			}
+
+			//Go up and right and check for continuous
+			while (currentCellToCheck != null)
+			{
+				bool isContinuous = true;
+				for (int i = 0; i < NeedsToWinCount; i++)
+				{
+					var matchingCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row + i && c.Column == currentCellToCheck.Column + i && c.Player == cell.Player && c.Locked);
+					if (matchingCell == null)
+						isContinuous = false;
+					else
+						matchingCell.WinnerCell = true;
+				}
+				if (isContinuous)
+					return true;
+				_GameCells.ForEach(c => c.WinnerCell = false);
+				var foundCell = _GameCells.FirstOrDefault(c => c.Row == currentCellToCheck.Row + 1 && c.Column == currentCellToCheck.Column + 1);
+				if (foundCell != null)
+					currentCellToCheck = foundCell;
+				else
+					break;
+			}
+
+			return false;
+		}
 
 		private GameCell __GetBottomCellToSet(GameCell cell)
 		{
