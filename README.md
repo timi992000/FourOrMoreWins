@@ -16,7 +16,7 @@ Customizable Settings: Adjust the game according to your preferences, such as th
 # UI
 ![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/7b142e27-fe2d-4e4c-9d21-8d254996e046)
 
-![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/1c4a45d4-3926-407b-94cb-b66a8a2170f1)
+![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/44f02a4a-4438-44ab-9049-ec7404b02eca)
 
 ![image](https://github.com/timi992000/FourOrMoreWins/assets/77628993/10a1cf74-3546-43ed-969e-eb42d30df020)
 
