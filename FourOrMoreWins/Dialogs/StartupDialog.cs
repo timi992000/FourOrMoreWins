@@ -39,9 +39,6 @@ namespace FourOrMoreWins.Client.Dialogs
         StartRequested?.Invoke(this, e);
         Hide();
       }
-      else
-        MessageBox.Show("Cant start new game, need a minimum of two players", "Cant start a game",
-            MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void __OnClosing(object? sender, CancelEventArgs e)
