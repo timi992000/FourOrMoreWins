@@ -9,7 +9,7 @@
                   Title="4 OR MORE WINS"
                   Height="450"
                   Width="800"
-                  Background="Blue">
+                  Background="{Binding BackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

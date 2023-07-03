@@ -20,9 +20,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="130" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*"
                               MaxWidth="200" />
         </Grid.ColumnDefinitions>
@@ -52,9 +58,60 @@
                            Margin="10 10 0 0"
                            Value="{Binding ColumnCount, Mode=TwoWay}"
                            Minimum="8" />
+
+        <TextBlock Text="Background Color"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="0 10 0 0" />
+
+        <mah:ColorPicker Grid.Row="3"
+                         Grid.Column="1"
+                         Margin="10 10 0 0"
+                         SelectedColor="{Binding SelectedBackgroundColor, Mode=TwoWay}"/>
+
+        <TextBlock Text="Player 1 Color"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="0 10 0 0" />
+
+        <mah:ColorPicker Grid.Row="4"
+                         Grid.Column="1"
+                         Margin="10 10 0 0"
+                         SelectedColor="{Binding SelectedPlayer1Color, Mode=TwoWay}" />
+
+        <TextBlock Text="Player 2 Color"
+                   Grid.Row="5"
+                   Grid.Column="0"
+                   Margin="0 10 0 0" />
+
+        <mah:ColorPicker Grid.Row="5"
+                         Grid.Column="1"
+                         Margin="10 10 0 0"
+                         SelectedColor="{Binding SelectedPlayer2Color, Mode=TwoWay}" />
+
+        <TextBlock Text="Win Color"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   Margin="0 10 0 0" />
+
+        <mah:ColorPicker Grid.Row="6"
+                         Grid.Column="1"
+                         Margin="10 10 0 0"
+                         SelectedColor="{Binding WinColor, Mode=TwoWay}" />
+
+        <TextBlock Text="Empty ellipse Color"
+                   Grid.Row="7"
+                   Grid.Column="0"
+                   Margin="0 10 0 0" />
+
+        <mah:ColorPicker Grid.Row="7"
+                         Grid.Column="1"
+                         Margin="10 10 0 0"
+                         SelectedColor="{Binding EmptyEllipseColor, Mode=TwoWay}" />
+
         <Button Content="Start"
                 Click="Button_Click"
-                Grid.Row="3"
+                Grid.Row="8"
                 Grid.ColumnSpan="2"
                 Margin="0 10 0 0" />
     </Grid>

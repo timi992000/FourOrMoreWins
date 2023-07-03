@@ -1,6 +1,5 @@
 ﻿using FourOrMoreWins.Core.BaseClasses;
 using FourOrMoreWins.Core.Entities;
-using FourOrMoreWins.Core.Extender;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
@@ -15,11 +14,7 @@ namespace FourOrMoreWins.Client.ViewModels
 	public class MainWindowViewModel : ViewModelBase
 	{
 		private readonly MetroWindow _MetroWindow;
-		private Player[] _Players = new Player[]
-		{
-		new Player{ PlayerBrush = Brushes.Yellow },
-		new Player{ PlayerBrush = Brushes.Red },
-		};
+		private Player[] _Players;
 		private Queue<Player> _TurnQueue;
 		private List<GameCell> _GameCells;
 		public MainWindowViewModel(MainWindow mainWindow)
@@ -28,6 +23,11 @@ namespace FourOrMoreWins.Client.ViewModels
 			NeedsToWinCount = 4;
 			RowCount = 6;
 			ColumnCount = 8;
+			SelectedBackgroundColor = Brushes.Blue.Color;
+			SelectedPlayer1Color = Brushes.Yellow.Color;
+			SelectedPlayer2Color = Brushes.Red.Color;
+			WinColor = Brushes.Green.Color;
+			EmptyEllipseColor = Brushes.White.Color;
 		}
 
 		public Player CurrentPlayer
@@ -51,6 +51,42 @@ namespace FourOrMoreWins.Client.ViewModels
 		public int ColumnCount
 		{
 			get => Get<int>();
+			set => Set(value);
+		}
+
+		public Color? SelectedBackgroundColor
+		{
+			get => Get<Color?>();
+			set
+			{
+				Set(value);
+				OnPropertyChanged(nameof(BackgroundBrush));
+			}
+		}
+
+		public Brush BackgroundBrush => new SolidColorBrush(SelectedBackgroundColor.Value);
+
+		public Color? SelectedPlayer1Color
+		{
+			get => Get<Color?>();
+			set => Set(value);
+		}
+
+		public Color? SelectedPlayer2Color
+		{
+			get => Get<Color?>();
+			set => Set(value);
+		}
+
+		public Color? WinColor
+		{
+			get => Get<Color?>();
+			set => Set(value);
+		}
+
+		public Color? EmptyEllipseColor
+		{
+			get => Get<Color?>();
 			set => Set(value);
 		}
 
@@ -104,13 +140,18 @@ namespace FourOrMoreWins.Client.ViewModels
 
 		private void __DoDraw()
 		{
+			_Players = new Player[]
+			{
+				new Player{ PlayerBrush =  new SolidColorBrush(SelectedPlayer1Color.Value), PlayerName = "Player 1"},
+				new Player{ PlayerBrush = new SolidColorBrush(SelectedPlayer2Color.Value), PlayerName = "Player 2"},
+			};
 			_GameCells = new List<GameCell>();
 			int size = 50;
 			int margin = 10;
 
 			var grid = new Grid
 			{
-				Background = Brushes.Blue
+				Background = new SolidColorBrush(SelectedBackgroundColor.Value)
 			};
 
 			for (int rowCounter = 0; rowCounter < RowCount; rowCounter++)
@@ -120,6 +161,7 @@ namespace FourOrMoreWins.Client.ViewModels
 				{
 					grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 					GameCell cell = __GetNewGameCell(size, margin, rowCounter, columnCounter);
+					cell.SetBackground(new SolidColorBrush(EmptyEllipseColor.Value));
 					Grid.SetColumn(cell.Element, columnCounter);
 					Grid.SetRow(cell.Element, rowCounter);
 					grid.Children.Add(cell.Element);
@@ -178,7 +220,7 @@ namespace FourOrMoreWins.Client.ViewModels
 			if (win)
 			{
 				IsRunningGame = false;
-				_GameCells.Where(c => c.WinnerCell).ToList().ForEach(wc => wc.SetPlayer(Brushes.Green));
+				_GameCells.Where(c => c.WinnerCell).ToList().ForEach(wc => wc.SetBackground(new SolidColorBrush(WinColor.Value)));
 			}
 
 			return win;
@@ -191,10 +233,9 @@ namespace FourOrMoreWins.Client.ViewModels
 
 		private void __DoWinAction()
 		{
-			var playerText = CurrentPlayer.PlayerBrush.ToStringValue().Equals("#FFFFFF00") ? "Yellow" : "Red";
 			var dlgSettings = new MetroDialogSettings();
 			dlgSettings.DialogMessageFontSize = 30;
-			ShowMessage($"Player {playerText} won", _MetroWindow, dlgSettings);
+			ShowMessage($"{CurrentPlayer.PlayerName} won", _MetroWindow, dlgSettings);
 		}
 
 		private bool __CheckRowWin(GameCell cell)
