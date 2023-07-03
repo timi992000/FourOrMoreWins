@@ -4,6 +4,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                   xmlns:local="clr-namespace:FourOrMoreWins"
                   mc:Ignorable="d"
                   Title="4 OR MORE WINS"
@@ -28,11 +29,25 @@
             <TextBlock Text="{Binding RightText}"
                        FontSize="30"
                        Margin="10 0 0 0" />
+            <Button Margin="10 0 0 0"
+                    Height="30"
+                    Command="{Binding [DrawGameField]}">
+                <Button.Content>
+                    <iconPacks:PackIconForkAwesome Kind="Refresh" />
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background"
+                                Value="Transparent" />
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
         <ContentControl Content="{Binding GameField}"
                         Grid.Row="1"
                         IsEnabled="{Binding IsRunningGame}"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Focusable="False" />
     </Grid>
 </mah:MetroWindow>

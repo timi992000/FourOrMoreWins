@@ -35,7 +35,7 @@ namespace FourOrMoreWins.Client.Dialogs
     {
       if (sender != null && sender is StartupDialogView StartupView)
       {
-        _ViewModel.DrawGameField();
+        _ViewModel.Execute_DrawGameField();
         StartRequested?.Invoke(this, e);
         Hide();
       }

@@ -111,7 +111,7 @@ namespace FourOrMoreWins.Client.ViewModels
 
 		public string RightText => IsRunningGame ? "TURN" : "Won";
 
-		public void DrawGameField()
+		public void Execute_DrawGameField()
 		{
 			try
 			{
