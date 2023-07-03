@@ -6,6 +6,7 @@
                   xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                   xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                   xmlns:local="clr-namespace:FourOrMoreWins"
+                  xmlns:controls="clr-namespace:FourOrMoreWins.Client.Controls"
                   mc:Ignorable="d"
                   Title="4 OR MORE WINS"
                   Height="450"
@@ -43,11 +44,11 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-        <ContentControl Content="{Binding GameField}"
-                        Grid.Row="1"
-                        IsEnabled="{Binding IsRunningGame}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Focusable="False" />
+        <controls:ScalableContentControl Grid.Row="1"
+                                         IsEnabled="{Binding IsRunningGame}"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Focusable="False"
+                                         controls:ScalableContentControl.Content="{Binding GameField}" />
     </Grid>
 </mah:MetroWindow>

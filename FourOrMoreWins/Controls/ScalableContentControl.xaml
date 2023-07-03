@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="FourOrMoreWins.Client.Controls.ScalableContentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:FourOrMoreWins.Client.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <ContentControl Content="{Binding Content,RelativeSource={RelativeSource Self}}">
+        <ContentControl.RenderTransform>
+            <ScaleTransform ScaleX="{Binding ScalingFactor, Mode=TwoWay}"
+                            ScaleY="{Binding ScalingFactor, Mode=TwoWay}"
+                            CenterX="0" />
+        </ContentControl.RenderTransform>
+    </ContentControl>
+</UserControl>
