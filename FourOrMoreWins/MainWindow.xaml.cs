@@ -26,7 +26,7 @@ namespace FourOrMoreWins
 			Hide();
 		}
 
-		private void __StartRequested(object? sender, EventArgs e)
+		private void __StartRequested(object? sender, bool againstComputer)
 		{
 			Show();
 		}

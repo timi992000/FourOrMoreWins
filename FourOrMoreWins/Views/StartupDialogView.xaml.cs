@@ -9,16 +9,21 @@ namespace FourOrMoreWins.Client.Views
   /// </summary>
   public partial class StartupDialogView : UserControl
   {
-    public event EventHandler StartGameRequested;
+    public event EventHandler<bool> StartGameRequested;
     public StartupDialogView()
     {
       InitializeComponent();
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    private void __StartPlayerVSPlayer(object sender, RoutedEventArgs e)
     {
-      StartGameRequested?.Invoke(this, e);
+      StartGameRequested?.Invoke(this, false);
     }
 
-  }
+		private void __StartPlayerVSComputer(object sender, RoutedEventArgs e)
+		{
+			StartGameRequested?.Invoke(this, true);
+		}
+
+	}
 }

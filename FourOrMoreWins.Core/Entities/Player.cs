@@ -6,5 +6,6 @@ namespace FourOrMoreWins.Core.Entities
   {
 		public string PlayerName { get; set; }
     public Brush PlayerBrush { get; set; }
-  }
+		public bool IsComputer { get; set; }
+	}
 }

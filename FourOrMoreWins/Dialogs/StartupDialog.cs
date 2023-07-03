@@ -11,7 +11,7 @@ namespace FourOrMoreWins.Client.Dialogs
   {
     private StartupDialogView _View;
     private MainWindowViewModel _ViewModel;
-    public event EventHandler StartRequested;
+    public event EventHandler<bool> StartRequested;
     public StartupDialog(MainWindowViewModel viewModel)
     {
       _ViewModel = viewModel;
@@ -22,7 +22,6 @@ namespace FourOrMoreWins.Client.Dialogs
     private void __Init()
     {
       Closing += __OnClosing;
-      //ResizeMode = ResizeMode.NoResize;
       WindowStartupLocation = WindowStartupLocation.CenterScreen;
       _View = new StartupDialogView();
       _View.DataContext = _ViewModel;
@@ -31,12 +30,13 @@ namespace FourOrMoreWins.Client.Dialogs
       Content = _View;
     }
 
-    private void __StartGameRequested(object? sender, EventArgs e)
+    private void __StartGameRequested(object? sender, bool againstComputer)
     {
       if (sender != null && sender is StartupDialogView StartupView)
       {
-        _ViewModel.Execute_DrawGameField();
-        StartRequested?.Invoke(this, e);
+				_ViewModel.AgainstComputer = againstComputer;
+				_ViewModel.Execute_DrawGameField();
+        StartRequested?.Invoke(this, againstComputer);
         Hide();
       }
     }

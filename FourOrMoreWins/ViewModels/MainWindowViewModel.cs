@@ -111,6 +111,12 @@ namespace FourOrMoreWins.Client.ViewModels
 
 		public string RightText => IsRunningGame ? "TURN" : "Won";
 
+		public bool AgainstComputer
+		{
+			get => Get<bool>();
+			set => Set(value);
+		}
+
 		public void Execute_DrawGameField()
 		{
 			try
@@ -138,12 +144,21 @@ namespace FourOrMoreWins.Client.ViewModels
 			OnPropertyChanged(nameof(Player.PlayerBrush));
 		}
 
+		private void __DoComputerTurn()
+		{
+			__NextPlayer();
+			var random = new Random();
+			var freeColumns = _GameCells.Where(c => !c.Locked).Select(l => l.Column).Distinct().ToList();
+			var cellToClick = _GameCells.FirstOrDefault(c => c.Column == freeColumns[random.Next(0, freeColumns.Count)]);
+			__CellClicked(cellToClick, EventArgs.Empty);
+		}
+
 		private void __DoDraw()
 		{
 			_Players = new Player[]
 			{
 				new Player{ PlayerBrush =  new SolidColorBrush(SelectedPlayer1Color.Value), PlayerName = "Player 1"},
-				new Player{ PlayerBrush = new SolidColorBrush(SelectedPlayer2Color.Value), PlayerName = "Player 2"},
+				new Player{ PlayerBrush = new SolidColorBrush(SelectedPlayer2Color.Value), PlayerName = "Player 2", IsComputer = AgainstComputer},
 			};
 			_GameCells = new List<GameCell>();
 			int size = 50;
@@ -190,6 +205,13 @@ namespace FourOrMoreWins.Client.ViewModels
 				cell.SetPlayer(CurrentPlayer);
 				if (__CheckAndHandleWin(cell))
 					return;
+
+				//if the last turn is no computer but we play against we need computer turn
+				if (!cell.Player.IsComputer && AgainstComputer)
+				{
+					__DoComputerTurn();
+					return;
+				}
 				__NextPlayer();
 			}
 		}
